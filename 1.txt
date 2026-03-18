@@ -1,0 +1,39 @@
+private void btnCalculate_Click(object sender, EventArgs e)
+{
+    try
+    {
+        // 1. Спроба зчитати цілі числа з текстових полів
+        // Якщо ввести літери, виникне FormatException
+        int numerator = int.Parse(txtNumerator.Text);
+        int denominator = int.Parse(txtDenominator.Text);
+
+        // 2. Обчислення цілої частини
+        // Якщо denominator = 0, виникне DivideByZeroException
+        int wholePart = numerator / denominator;
+
+        // 3. Виведення результату
+        lblResult.ForeColor = Color.Black;
+        lblResult.Text = $"Ціла частина: {wholePart}";
+    }
+    catch (FormatException)
+    {
+        // Обробка випадку, коли введені не числа
+        MessageBox.Show("Помилка: введіть коректні цілі числа!", "Помилка введення", 
+                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+        lblResult.Text = "Некоректні дані";
+        lblResult.ForeColor = Color.Red;
+    }
+    catch (DivideByZeroException)
+    {
+        // Обробка ділення на нуль
+        MessageBox.Show("Помилка: знаменник не може дорівнювати нулю!", "Математична помилка", 
+                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        lblResult.Text = "Ділення на 0!";
+        lblResult.ForeColor = Color.Red;
+    }
+    catch (Exception ex)
+    {
+        // Для будь-яких інших непередбачених помилок
+        MessageBox.Show("Сталася невідома помилка: " + ex.Message);
+    }
+}
