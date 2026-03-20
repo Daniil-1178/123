@@ -37,3 +37,54 @@ private void btnCalculate_Click(object sender, EventArgs e)
         MessageBox.Show("Сталася невідома помилка: " + ex.Message);
     }
 }
+
+
+
+
+
+private void btnCalculate_Click(object sender, EventArgs e)
+{
+    // Скидаємо колір тексту перед кожним новим розрахунком
+    lblResult.ForeColor = Color.Black;
+
+    try
+    {
+        // 1. Спроба зчитати цілі числа
+        int numerator = int.Parse(txtNumerator.Text);
+        int denominator = int.Parse(txtDenominator.Text);
+
+        // 2. Обчислення цілої частини
+        int wholePart = numerator / denominator;
+
+        // 3. Виведення результату
+        lblResult.Text = $"Ціла частина: {wholePart}";
+    }
+    catch (FormatException)
+    {
+        MessageBox.Show("Помилка: введіть лише цілі числа!", "Помилка формату", 
+                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+        lblResult.Text = "Некоректні дані";
+        lblResult.ForeColor = Color.Red;
+    }
+    catch (DivideByZeroException)
+    {
+        MessageBox.Show("Помилка: ділення на нуль неможливе!", "Математична помилка", 
+                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        lblResult.Text = "Ділення на 0!";
+        lblResult.ForeColor = Color.Red;
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Непередбачена помилка: " + ex.Message);
+    }
+    finally
+    {
+        // Цей код виконається ЗАВЖДИ
+        // Наприклад, виділимо текст у полі чисельника для швидкого перезапису
+        txtNumerator.SelectAll();
+        txtNumerator.Focus();
+        
+        // Можна вивести в консоль для відладки
+        Console.WriteLine("Спроба обчислення завершена.");
+    }
+}
